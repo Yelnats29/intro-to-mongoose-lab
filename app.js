@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const Customer = require('./customer.js');
 let customerName;
 let customerAge;
+let id;
 
 
 //-----------------------------------------------------------//
@@ -26,35 +27,36 @@ const disconnect = async () => {
 // Create a new Customer
 const createCustomer = async () => {
     const customerData = {
-        name: individual,
-        age: age,
+        name: customerName,
+        age: customerAge,
     };
     const customer = await Customer.create(customerData);
-    console.log("New Customer", customer)
+    console.log();
+    console.log("New Customer Entered:", customer)
 };
 
 // View all Customers
 const viewAllCustomers = async () => {
     const customers = await Customer.find({})
-    console.log("All Customers:", customers);
+    console.log();
+    console.log("Showing All Customers:", customers);
 };
 
 // Update a customer
 const updateCustomer = async () => {
-    const id = ""
-    const customer = await Customer.findByIdAndUpdate(id, { isComplete: true },
-        { new: true });
+    const customer = await Customer.findByIdAndUpdate(id, { name: customerName }, {age: customerAge });
+    console.log();
     console.log("The New Updates:", customer)
 };
 
 // Delete a Customer
 const deleteCustomer = async () => {
-    const id = ""
     const customer = await Customer.findByIdAndDelete(id);
+    console.log();
     console.log("Customer Has Been Deleted:", customer)
 };
 
-//Launch new customer function
+//Launch New Customer Function
 const createCustomerQueries = async () => {
     console.log(`Queries running.`);
     await createCustomer();
@@ -127,32 +129,30 @@ const action = () => {
  2. View all customers \n
  3. Update a customer \n
  4. Delete a customer \n
- 5. quit \n`
+ 5. Quit \n`
 
     console.log(choices)
-    const answer = prompt(`Please select a choice `).toLowerCase();
+    const answer = prompt(`Please select a choice `);
     console.clear();
+    connect();
 
 
-    if (answer == 1 || answer === "create a customer" || answer === `1. create a customer`) {
+    if (answer === `1`) {
         console.clear(); customerName = prompt("Enter the indiviual's name: "); console.log(); customerAge = prompt("Enter the indiviual's age: "); createCustomerQueries();
-    } else if (answer == 2 || answer === "view all customers" || `2. View all customers`) {
-        console.clear(), viewAllCustomersQueries();
-    } else if (answer == 3 || answer === "update a customer" || answer ===`3. Update a customer`) {
-        console.clear(), updateCustomerQueries();
-    } else if (answer == 4 || answer === "delete a customer" || answer === `4. Delete a customer`) {
-        console.clear(), deleteCustomerQueries();
-    } else if (answer == 5 || answer === "quit" || answer === `5. Quit`) {
-        console.clear(), disconnectQueries();
+    } else if (answer === `2`) {
+        console.clear(); viewAllCustomersQueries();
+    } else if (answer === `3`) {
+        console.clear(); id = prompt(`To Update, Please Enter the Customer's ID: `); customerName = prompt(`What should the Customer's name be updated to?`); customerAge = prompt(`What should the Customer's age be updated to?`); updateCustomerQueries();
+    } else if (answer === `4`) {
+        console.clear(); id = prompt(`To Delete, Please Enter the Customer's ID: `);  deleteCustomerQueries();
+    } else if (answer === `5`) {
+        console.clear(); disconnectQueries();
     } else {
-        console.log('Please select an answer choice from the above.');
         console.log();
-        action()
+        console.log('Please select an answer choice using your number pad from the above choices.');
+        console.log();
+        action();
     };
 }
 
 action();
-
-
-
-connect();
