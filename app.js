@@ -44,13 +44,9 @@ const viewAllCustomers = async () => {
 
 // Update a customer
 const updateCustomer = async () => {
-    const customer = await Customer.findByIdAndUpdate(id, {updatedInfo});
-    const updatedInfo = {
-        name: customerName,
-        age: customerAge,
-    };
+    const customer = await Customer.findByIdAndUpdate(id, { name: newName, age: newAge });
     console.log();
-    console.log("The New Updates:", customer)
+    console.log("Updates Made to:", customer)
 };
 
 // Delete a Customer
@@ -127,6 +123,7 @@ userIntroduction();
 
 // CRM Actions
 const action = () => {
+
     const choices = `What would you like to do?
 
  1. Create a customer \n
@@ -146,9 +143,9 @@ const action = () => {
     } else if (answer === `2`) {
         console.clear(); viewAllCustomersQueries();
     } else if (answer === `3`) {
-        console.clear(); id = prompt(`To Update, Please Enter the Customer's ID: `); customerName = prompt(`What should the Customer's name be updated to? `); customerAge = prompt(`What should the Customer's age be updated to? `); updateCustomerQueries();
+        console.clear(); id = prompt(`To Update, Please Enter the Customer's ID: `); newName = prompt(`What should the Customer's name be updated to? `); newAge = prompt(`What should the Customer's age be updated to? `); updateCustomerQueries();
     } else if (answer === `4`) {
-        console.clear(); id = prompt(`To Delete, Please Enter the Customer's ID: `);  deleteCustomerQueries();
+        console.clear(); id = prompt(`To Delete, Please Enter the Customer's ID: `); deleteCustomerQueries();
     } else if (answer === `5`) {
         console.clear(); disconnectQueries();
     } else {
@@ -156,7 +153,7 @@ const action = () => {
         console.log('Please select an answer choice using your number pad from the above choices.');
         console.log();
         action();
-    };
-}
+    }
+};
 
 action();
