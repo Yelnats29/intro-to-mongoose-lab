@@ -44,7 +44,11 @@ const viewAllCustomers = async () => {
 
 // Update a customer
 const updateCustomer = async () => {
-    const customer = await Customer.findByIdAndUpdate(id, { name: customerName }, {age: customerAge });
+    const customer = await Customer.findByIdAndUpdate(id, {updatedInfo});
+    const updatedInfo = {
+        name: customerName,
+        age: customerAge,
+    };
     console.log();
     console.log("The New Updates:", customer)
 };
@@ -142,7 +146,7 @@ const action = () => {
     } else if (answer === `2`) {
         console.clear(); viewAllCustomersQueries();
     } else if (answer === `3`) {
-        console.clear(); id = prompt(`To Update, Please Enter the Customer's ID: `); customerName = prompt(`What should the Customer's name be updated to?`); customerAge = prompt(`What should the Customer's age be updated to?`); updateCustomerQueries();
+        console.clear(); id = prompt(`To Update, Please Enter the Customer's ID: `); customerName = prompt(`What should the Customer's name be updated to? `); customerAge = prompt(`What should the Customer's age be updated to? `); updateCustomerQueries();
     } else if (answer === `4`) {
         console.clear(); id = prompt(`To Delete, Please Enter the Customer's ID: `);  deleteCustomerQueries();
     } else if (answer === `5`) {
